@@ -1,0 +1,20 @@
+---
+- name: To install packages on specific hosts
+  hosts: all
+  become: true
+
+  tasks:
+    - name: To install Packages on databaseserver
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ db_packages }}"
+      when: "'databaseserver' in group_names"
+
+    - name: To install packages on webserver
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ web_packages }}"
+      when: "'webserver' in group_names"
+~
